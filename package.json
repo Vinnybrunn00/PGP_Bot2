@@ -1,0 +1,6 @@
+{
+    "dependencies": {
+        "@open-wa/wa-automate": "^4.71.11",
+        "node": "^18.17.0"
+    }
+}

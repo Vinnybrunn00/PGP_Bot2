@@ -107,7 +107,7 @@ function start(bot) {
             }
         }
 
-        if (message.body.length >= 12) {
+        if (message.body.length >= 23) {
             try {
                 await api.registerOpiniao_(message.notifyName, message.author, message.sender.profilePicThumbObj.eurl, message.body)
                     .then(async (event) => {

@@ -7,7 +7,6 @@ const pathRegister = path.resolve(__dirname, '../users/register/register.json')
 const pathOpiniao = path.resolve(__dirname, '../data/opiniao/opiniao_msg.json')
 const pathVotes = path.resolve(__dirname, '../data/db/votes.json')
 const pathBlockInit = path.resolve(__dirname, '../users/block_initial/block.json')
-const time = new Date()
 const boas_vindas = constants.boasVindas
 
 class ApiUtils {
@@ -151,15 +150,14 @@ class ApiUtils {
         return theme;
     }
 
-    async saveLogs(args, type, func) {
+    async saveLogs(args, timers, type, func) {
         try {
             if (args !== undefined && type !== undefined) {
-                await fs.writeFile(pathLog, `${time}: [${type}] ${args} => ${func}` + '\n', { flag: 'a' })
+                await fs.writeFile(pathLog, `${timers || await this.getHour()}: [${type}] ${args} => ${func} ` + '\n', { flag: 'a' })
                 return;
             }
         } catch (err) {
-            console.log(err)
-            return;
+            throw err;
         }
     }
 
@@ -181,22 +179,27 @@ class ApiUtils {
                 register.push(objUser)
                 await fs.writeFile(pathRegister, JSON.stringify(register))
                 await this.saveLogs(`"${name}" Registrado!`, 'INFO', 'registerUser()')
-                return objUser
+                return objUser.name + objUser.contact
             } catch (err) {
                 await this.saveLogs(err, 'ERROR', 'registerUser()')
                 return;
             }
         }
-        return;
+    }
+
+    async getHour() {
+        const getdate = new Date()
+        return `${String(getdate.getHours()).padStart(2, '0')}:${String(getdate.getMinutes()).padStart(2, '0')} `;
     }
 
     getHour(person) {
+        const time = new Date()
         if (time >= 1 && time <= 12) {
-            return `Olá *${person}*, Bom dia\n\n${boas_vindas}!`
+            return `Olá * ${person}*, Bom dia\n\n${boas_vindas} !`
         } else if (time >= 13 && time <= 18) {
-            return `Olá *${person}*, Boa Tarde\n\n${boas_vindas}!`
+            return `Olá * ${person}*, Boa Tarde\n\n${boas_vindas} !`
         } else {
-            return `Olá *${person}*, Boa Noite\n\n${boas_vindas}!`
+            return `Olá * ${person}*, Boa Noite\n\n${boas_vindas} !`
         }
     }
 }

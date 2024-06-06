@@ -22,10 +22,14 @@ function start(bot) {
     bot.onMessage(async message => {
         if (message.chat.isGroup) return;
 
+        let timers;
+
         const isBlockInit = await api.isInitBlock(message.author)
         const isBlocked = await api.isBlocked(message.author)
 
         if (isBlocked) return;
+
+        await api.getHour(async T => timers = T);
 
         // block user
         const impr = constants.msgImproprias
@@ -42,11 +46,13 @@ function start(bot) {
                 for (let i = 0; i < owner.length; i++) {
                     if (message.author === owner[i]) {
                         await bot.sendFile(message.from, 'logs/logfile.log', 'logfile.log', '• Arquivo de logs de eventos do bot!')
+                        await api.saveLogs(`Arquivo de log Solocitado por ${message.author}`, timers, 'INFO', '!getlog')
                         return;
                     }
                 }
             } catch (err) {
                 await bot.sendText(message.from, err)
+                await api.saveLogs(err, timers, 'ERROR', '!getlog')
                 return;
             }
         }
@@ -55,6 +61,7 @@ function start(bot) {
             for (let i = 0; i < owner.length; i++) {
                 if (message.author === owner[i]) {
                     await bot.sendFile(message.from, 'data/db/votes.json', 'votes.json', '• Arquivo de votos do PGP')
+                    await api.saveLogs(`Arquivo de votos Solocitado por ${message.author}`, timers, 'INFO', '!getvote')
                     return;
                 }
             }
@@ -64,6 +71,7 @@ function start(bot) {
             for (let i = 0; i < owner.length; i++) {
                 if (message.author === owner[i]) {
                     await bot.sendFile(message.from, 'data/opiniao/opiniao_msg.json', 'opiniao_msg.json', '• Arquivo de opiniões do PGP')
+                    await api.saveLogs(`Arquivo de opinião Solocitado por ${message.author}`, timers, 'INFO', '!getopinion')
                     return;
                 }
             }
@@ -73,7 +81,7 @@ function start(bot) {
         await api.registerUser(message.notifyName, message.author, message.sender.profilePicThumbObj.eurl)
             .then(async (obj) => {
                 if (obj !== undefined) {
-                    await api.saveLogs(obj, 'INFO', 'save user interaction')
+                    await api.saveLogs(obj, timers, 'INFO', 'save user interaction')
                     return;
                 }
             });
@@ -88,26 +96,26 @@ function start(bot) {
                     )).then(async () => {
                         await api.blockInitial(message.author).then(async boolOrError => {
                             if (boolOrError) {
-                                await api.saveLogs('Contact Blocked', 'INFO', 'send themes initial')
+                                await api.saveLogs('Contact Blocked', timers, 'INFO', 'send themes initial')
                                 return;
                             }
-                            await api.saveLogs(boolOrError, 'ERROR', 'send themes initial')
+                            await api.saveLogs(boolOrError, timers, 'ERROR', 'send themes initial')
                             return;
                         })
                         questions.forEach(async element => {
                             let listToString = element.themes.toString()
                             await bot.simulateTyping(message.from, true)
                             await bot.sendText(message.from, `${choose}${listToString.replace(/,/g, '')}`)
-                        })
+                        });
                     })
                 } catch (err) {
-                    await api.saveLogs(err, 'ERROR', 'send themes initial...')
+                    await api.saveLogs(err, timers, 'ERROR', 'send themes initial...')
                     return;
                 }
             }
         }
 
-        if (message.body.length >= 23) {
+        if (message.body.length >= 35) {
             try {
                 await api.registerOpiniao_(message.notifyName, message.author, message.sender.profilePicThumbObj.eurl, message.body)
                     .then(async (event) => {
@@ -119,7 +127,7 @@ function start(bot) {
                         return;
                     })
             } catch (err) {
-                await api.saveLogs(err, 'ERROR', 'opiniao')
+                await api.saveLogs(err, timers, 'ERROR', 'opiniao')
                 return;
             }
         }
@@ -137,7 +145,7 @@ function start(bot) {
                     return;
                 })
             } catch (err) {
-                await api.saveLogs(err, 'ERROR', 'send themes')
+                await api.saveLogs(err, timers, 'ERROR', 'send themes')
                 return
             }
         }
@@ -157,7 +165,7 @@ function start(bot) {
                         }
                     })
                 } catch (err) {
-                    await api.saveLogs(err, 'ERROR', 'send Subthemes')
+                    await api.saveLogs(err, timers, 'ERROR', 'send Subthemes')
                     return;
                 }
             }

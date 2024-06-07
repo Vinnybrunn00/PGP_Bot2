@@ -91,7 +91,7 @@ function start(bot) {
             if (message.body.toLowerCase() === msg) {
                 if (isBlockInit) return;
                 try {
-                    await bot.sendText(message.chat.id, api.getHour(
+                    await bot.sendText(message.chat.id, api.getHours(
                         message.notifyName
                     )).then(async () => {
                         await api.blockInitial(message.author).then(async boolOrError => {

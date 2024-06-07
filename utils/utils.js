@@ -192,7 +192,7 @@ class ApiUtils {
         return `${String(getdate.getHours()).padStart(2, '0')}:${String(getdate.getMinutes()).padStart(2, '0')} `;
     }
 
-    getHour(person) {
+    getHours(person) {
         const time = new Date()
         if (time >= 1 && time <= 12) {
             return `Olá * ${person}*, Bom dia\n\n${boas_vindas} !`

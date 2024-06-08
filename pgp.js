@@ -29,7 +29,7 @@ function start(bot) {
 
         if (isBlocked) return;
 
-        await api.getHour(async T => timers = T);
+        await api.hourLog().then(async T => timers = T)
 
         // block user
         const impr = constants.msgImproprias

@@ -153,7 +153,7 @@ class ApiUtils {
     async saveLogs(args, timers, type, func) {
         try {
             if (args !== undefined && type !== undefined) {
-                await fs.writeFile(pathLog, `${timers || await this.getHour()}: [${type}] ${args} => ${func} ` + '\n', { flag: 'a' })
+                await fs.writeFile(pathLog, `${timers || await this.hourLog()}: [${type}] ${args} => ${func} ` + '\n', { flag: 'a' })
                 return;
             }
         } catch (err) {
@@ -187,9 +187,9 @@ class ApiUtils {
         }
     }
 
-    async getHour() {
-        const getdate = new Date()
-        return `${String(getdate.getHours()).padStart(2, '0')}:${String(getdate.getMinutes()).padStart(2, '0')} `;
+    async hourLog() {
+        const getDate = new Date()
+        return `${getDate.getFullYear()}.${getDate.getMonth() >= 10 ? getDate.getMonth() + 1 : `0${getDate.getMonth() + 1}`}.${getDate.getDate() >= 10 ? getDate.getDate() : `0${getDate.getDate()}`} ${getDate.getHours() >= 10 ? getDate.getHours() : `0${getDate.getHours()}`}.${getDate.getMinutes() >= 10 ? getDate.getMinutes() : `0${getDate.getMinutes()}`}.${getDate.getSeconds() >= 10 ? getDate.getSeconds() : `0${getDate.getSeconds()}`}`
     }
 
     getHours(person) {
@@ -203,4 +203,5 @@ class ApiUtils {
         }
     }
 }
+
 exports.ApiUtils = ApiUtils

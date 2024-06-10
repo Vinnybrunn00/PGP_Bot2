@@ -140,7 +140,7 @@ class ApiUtils {
                     }
                 }
                 content = content.toString()
-                await bot.reply(chatId, `${vote.length > 4 ? '' : this.sendMsgTheme(mpdTheme, vote)}\n\n${content.replace(/,/g, '')}`, messageId)
+                await bot.reply(chatId, `${vote.length > 6 ? '' : this.sendMsgTheme(mpdTheme, vote)}\n\n${content.replace(/,/g, '')}`, messageId)
                 return;
             } catch (err) {
                 await this.saveLogs(err, 'ERROR', 'themesQuestions()')

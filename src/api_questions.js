@@ -15,6 +15,7 @@ const questoes = [
             '* 9 - *Desenvolvimento Econômico*\n',
             '* 10 - *Turismo*\n',
             '* 11 - *Saúde*\n',
+            '* 12 - *Emprego e Renda*\n'
         ],
         subthemes: [
             {
@@ -92,6 +93,10 @@ const questoes = [
                     '* 11.5 - *Sistema de Marcações*\n',
                     '* 11.6 - *Atendimento Hospitalar*\n',
                     '* 11.7 - *Assistência de média complexidade*\n',
+                ], 
+                Emprego_e_Renda: [
+                    '* 12.1 - *Criação de um centro de empreendedorismo local*\n',
+                    '* 12.2 - *Parcerias com empresas para estágios e empregos\n'
                 ]
             }
         ],
@@ -384,7 +389,15 @@ const questoes = [
                     '* 11.7.1 - *Ampliação e qualificação da rede de unidades de saúde de média complexidade, como os Centros de Especialidades e Policlínicas, para garantir acesso oportuno e adequado aos serviços especializados*\n',
                     '* 11.7.2 - *Investimento em tecnologia e telemedicina para ampliar o acesso a consultas e exames especializados em áreas remotas e de difícil acesso, garantindo equidade no acesso aos serviços de saúde*\n',
                     '* 11.7.3 - *Capacitação e valorização dos profissionais de saúde que atuam nos serviços de média complexidade, visando garantir qualidade e resolutividade no atendimento prestado aos usuários do SUS*.\n'
-                ]
+                ],
+
+                /////////// ------ EMPREGO E RENDA  ------ ///////////
+                Criação_de_um_centro_de_empreendedorismo_local: [
+                    '* 12.1.1 - Estabelecer um centro de empreendedorismo que ofereça capacitação, mentoria e apoio financeiro para pequenos empreendedores locais.'
+                ],
+                Parcerias_com_empresas_para_estágios_e_empregos:[
+                    '* 12.1.2 - Estabelecer um centro de empreendedorismo que ofereça capacitação, mentoria e apoio financeiro para pequenos empreendedores locais.'
+                ],
             }
         ],
         subsubsubthemes: [
@@ -696,6 +709,10 @@ const questoes = [
                 ampliação_qualificação_rede_unidades_saúde_média_complexidade_como_Centros_Especialidades_Policlínicas_garantir_acesso_oportuno_adequado_serviços_especializados: [constants.msgFinal],
                 investimento_tecnologia_telemedicina_ampliar_acesso_consultas_exames_especializados_áreas_remotas_difícil_acesso_garantindo_equidade_acesso_erviços_saúde: [constants.msgFinal],
                 capacitação_valorização_profissionais_saúde_atuam_serviços_média_complexidade_visando_garantir_qualidade_resolutividade_atendimento_prestado_usuários_SUS: [constants.msgFinal],
+                
+                // Criação de um Centro de Empreendedorismo Local
+                Estabelecer_um_centro_de_empreendedorismo_que_ofereça_capacitação,_mentoria_e_apoio_financeiro_para_pequenos_empreendedores_locais : [constants.msgFinal],
+                Firmar_parcerias_com_empresas_regionais_para_criar_programas_de_estágio_e_oportunidades_de_emprego_para_jovens_e_adultos_desempregados: [constants.msgFinal]
             }
         ]
     }

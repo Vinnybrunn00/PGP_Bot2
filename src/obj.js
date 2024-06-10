@@ -12,6 +12,7 @@ const objFunc = {
     9: ['Desenvolvimento_Econômico', 'subthemes'],
     10: ['Turismo', 'subthemes'],
     11: ['Saúde', 'subthemes'],
+    12: ['Emprego_e_Renda', 'subthemes'],
 
     ///////////// configure subsubthemes /////////////
 
@@ -89,6 +90,10 @@ const objFunc = {
     11.5: ['Sistema_de_Marcações', 'subsubthemes'],
     11.6: ['Atendimento_Hospitalar', 'subsubthemes'],
     11.7: ['Assistência_de_Média_Complexidade', 'subsubthemes'],
+
+    // Emprego_e_Renda
+    12.1: ['Criação_de_um_centro_de_empreendedorismo_local', 'subsubthemes'],
+    12.2: ['Parcerias_com_empresas_para_estágios_e_empregos', 'subsubthemes'],
 
     ///////////////////// ------- subsubsubthemes ------- //////////////////////////
 
@@ -367,6 +372,11 @@ const objFunc = {
     '11.7.1': ['ampliação_qualificação_rede_unidades_saúde_média_complexidade_como_Centros_Especialidades_Policlínicas_garantir_acesso_oportuno_adequado_serviços_especializados', 'subsubsubthemes'],
     '11.7.2': ['investimento_tecnologia_telemedicina_ampliar_acesso_consultas_exames_especializados_áreas_remotas_difícil_acesso_garantindo_equidade_acesso_erviços_saúde', 'subsubsubthemes'],
     '11.7.3': ['capacitação_valorização_profissionais_saúde_atuam_serviços_média_complexidade_visando_garantir_qualidade_resolutividade_atendimento_prestado_usuários_SUS', 'subsubsubthemes'],
+
+    // Criação de um Centro de Empreendedorismo Local
+    '12.1.1': ['Estabelecer_um_centro_de_empreendedorismo_que_ofereça_capacitação', 'subsubsubthemes'],
+    '12.1.2': ['Firmar_parcerias_com_empresas_regionais_para_criar_programas_de_estágio_e_oportunidades_de_emprego_para_jovens_e_adultos_desempregados', 'subsubsubthemes']
+
 }
 
 exports.objFunc = objFunc

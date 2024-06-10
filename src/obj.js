@@ -374,7 +374,7 @@ const objFunc = {
     '11.7.3': ['capacitação_valorização_profissionais_saúde_atuam_serviços_média_complexidade_visando_garantir_qualidade_resolutividade_atendimento_prestado_usuários_SUS', 'subsubsubthemes'],
 
     // Criação de um Centro de Empreendedorismo Local
-    '12.1.1': ['Estabelecer_um_centro_de_empreendedorismo_que_ofereça_capacitação', 'subsubsubthemes'],
+    '12.1.1': ['Estabelecer_um_centro_de_empreendedorismo_que_ofereça_capacitação_,_mentoria_e_apoio_financeiro_para_pequenos_empreendedores_locais', 'subsubsubthemes'],
     '12.1.2': ['Firmar_parcerias_com_empresas_regionais_para_criar_programas_de_estágio_e_oportunidades_de_emprego_para_jovens_e_adultos_desempregados', 'subsubsubthemes']
 
 }

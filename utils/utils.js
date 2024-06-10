@@ -40,6 +40,7 @@ class ApiUtils {
 
     sendMsgTheme(theme, vote) {
         let exemple;
+        console.log(vote.length)
         if (vote.length === 1) exemple = `*Exemplo*: Envie *${vote}.1* para o tema desejado`;
         if (vote.length === 3) exemple = `*Exemplo*: Envie *${vote}.3* para o tema desejado`;
         if (vote.length === 5) exemple = `*Exemplo*: Envie *${vote}.2* para o tema desejado`;
@@ -141,7 +142,7 @@ class ApiUtils {
                     }
                 }
                 content = content.toString()
-                await bot.reply(chatId, `${vote.length > 7 ? '' : this.sendMsgTheme(mpdTheme, vote)}\n\n${content.replace(/,/g, '')}`, messageId)
+                await bot.reply(chatId, `${vote.length > 4 ? '' : this.sendMsgTheme(mpdTheme, vote)}\n\n${content.replace(/,/g, '')}`, messageId)
                 return;
             } catch (err) {
                 await this.saveLogs(err, 'ERROR', 'themesQuestions()')

@@ -41,8 +41,9 @@ class ApiUtils {
     sendMsgTheme(theme, vote) {
         let exemple;
         if (vote.length === 1) exemple = `*Exemplo*: Envie *${vote}.1* para o tema desejado`;
-        if (vote.length === 2) exemple = `*Exemplo*: Envie *${vote}.3* para o tema desejado`;
-        if (vote.length === 3) exemple = `*Exemplo*: Envie *${vote}.2* para o tema desejado`;
+        if (vote.length === 3) exemple = `*Exemplo*: Envie *${vote}.3* para o tema desejado`;
+        if (vote.length === 5) exemple = `*Exemplo*: Envie *${vote}.2* para o tema desejado`;
+        if (vote.length === 6) exemple = `*Exemplo*: Envie *${vote}.1* para o tema desejado`;
         return `Tema Escolhido: *${theme}*\n\n➜ Agora escolha um dos subtemas sobre *${theme}* abaixo. 👇\n\n${exemple}`
     }
 
@@ -140,7 +141,7 @@ class ApiUtils {
                     }
                 }
                 content = content.toString()
-                await bot.reply(chatId, `${vote.length > 6 ? '' : this.sendMsgTheme(mpdTheme, vote)}\n\n${content.replace(/,/g, '')}`, messageId)
+                await bot.reply(chatId, `${vote.length > 7 ? '' : this.sendMsgTheme(mpdTheme, vote)}\n\n${content.replace(/,/g, '')}`, messageId)
                 return;
             } catch (err) {
                 await this.saveLogs(err, 'ERROR', 'themesQuestions()')

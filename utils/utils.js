@@ -42,7 +42,9 @@ class ApiUtils {
         let exemple;
         console.log(vote.length)
         if (vote.length === 1) exemple = `*Exemplo*: Envie *${vote}.1* para o tema desejado`;
-        if (vote.length === 3) exemple = `*Exemplo*: Envie *${vote}.3* para o tema desejado`;
+        if (vote.length === 2) exemple = `*Exemplo*: Envie *${vote}.3* para o tema desejado`;
+        if (vote.length === 3) exemple = `*Exemplo*: Envie *${vote}.2* para o tema desejado`;
+        if (vote.length === 4) exemple = `*Exemplo*: Envie *${vote}.2* para o tema desejado`;
         if (vote.length === 5) exemple = `*Exemplo*: Envie *${vote}.2* para o tema desejado`;
         if (vote.length === 6) exemple = `*Exemplo*: Envie *${vote}.1* para o tema desejado`;
         return `Tema Escolhido: *${theme}*\n\n➜ Agora escolha um dos subtemas sobre *${theme}* abaixo. 👇\n\n${exemple}`

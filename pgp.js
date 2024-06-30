@@ -8,6 +8,15 @@ const object = require('./src/obj')
 const config = require('./config/config_create')
 const owner = require('./users/owners/owner.json')
 
+//firebase
+
+const utilsConfig = require('./service/api')
+let utilsConf = new utilsConfig.Api()
+
+const apiFirestore = require('./service/firebase_services')
+let FirebaseService = new apiFirestore.FirebaseServices()
+
+
 // instance api
 const questions = qt.questoes
 const obj = object.objFunc
@@ -21,15 +30,17 @@ wa.create(create).then(bot => start(bot));
 function start(bot) {
     bot.onMessage(async message => {
         if (message.chat.isGroup) return;
+        if (message.author !== '557488700196@c.us') return;
 
-        let timers;
+        let formatTime, timestamp;
 
         const isBlockInit = await api.isInitBlock(message.author)
         const isBlocked = await api.isBlocked(message.author)
 
         if (isBlocked) return;
 
-        await api.hourLog().then(async T => timers = T)
+        await utilsConf.formatTime().then(async T => formatTime = T)
+        await utilsConf.formatTimeStamp(formatTime).then(async TS => timestamp = TS);
 
         // block user
         const impr = constants.msgImproprias
@@ -46,13 +57,13 @@ function start(bot) {
                 for (let i = 0; i < owner.length; i++) {
                     if (message.author === owner[i]) {
                         await bot.sendFile(message.from, 'logs/logfile.log', 'logfile.log', '• Arquivo de logs de eventos do bot!')
-                        await api.saveLogs(`Arquivo de log Solocitado por ${message.author}`, timers, 'INFO', '!getlog')
+                        await FirebaseService.addLogs(formatTime, 'INFO', `Arquivo de log Solocitado por ${message.author}`, '!gelog');
                         return;
                     }
                 }
             } catch (err) {
                 await bot.sendText(message.from, err)
-                await api.saveLogs(err, timers, 'ERROR', '!getlog')
+                await FirebaseService.addLogs(formatTime, 'ERROR', err, '!getlog');
                 return;
             }
         }
@@ -61,7 +72,7 @@ function start(bot) {
             for (let i = 0; i < owner.length; i++) {
                 if (message.author === owner[i]) {
                     await bot.sendFile(message.from, 'data/db/votes.json', 'votes.json', '• Arquivo de votos do PGP')
-                    await api.saveLogs(`Arquivo de votos Solocitado por ${message.author}`, timers, 'INFO', '!getvote')
+                    await FirebaseService.addLogs(formatTime, 'INFO', `Arquivo de votos Solocitado por ${message.author}`, '!getvote');
                     return;
                 }
             }
@@ -71,17 +82,25 @@ function start(bot) {
             for (let i = 0; i < owner.length; i++) {
                 if (message.author === owner[i]) {
                     await bot.sendFile(message.from, 'data/opiniao/opiniao_msg.json', 'opiniao_msg.json', '• Arquivo de opiniões do PGP')
-                    await api.saveLogs(`Arquivo de opinião Solocitado por ${message.author}`, timers, 'INFO', '!getopinion')
+                    await api.saveLogs(`Arquivo de opinião Solocitado por ${message.author}`, formatTime, 'INFO', '!getopinion')
                     return;
                 }
             }
         }
 
         // save user interaction
+        await FirebaseService.addParticipant(message.notifyName, message.author, message.sender.profilePicThumbObj.eurl, formatTime, timestamp)
+            .then(async obj => {
+                if (obj != undefined) {
+                    console.log('Registrado')
+                    return;
+                }
+            })
+
         await api.registerUser(message.notifyName, message.author, message.sender.profilePicThumbObj.eurl)
             .then(async (obj) => {
                 if (obj !== undefined) {
-                    await api.saveLogs(obj, timers, 'INFO', 'save user interaction')
+                    await FirebaseService.addLogs(formatTime, 'INFO', obj, 'registerUser()');
                     return;
                 }
             });
@@ -96,10 +115,10 @@ function start(bot) {
                     )).then(async () => {
                         await api.blockInitial(message.author).then(async boolOrError => {
                             if (boolOrError) {
-                                await api.saveLogs('Contact Blocked', timers, 'INFO', 'send themes initial')
+                                await FirebaseService.addLogs(formatTime, 'INFO', 'Contact Blocked', 'Send themes initial');
                                 return;
                             }
-                            await api.saveLogs(boolOrError, timers, 'ERROR', 'send themes initial')
+                            await FirebaseService.addLogs(formatTime, 'ERRO', boolOrError, 'Send themes initial');
                             return;
                         })
                         questions.forEach(async element => {
@@ -109,27 +128,23 @@ function start(bot) {
                         });
                     })
                 } catch (err) {
-                    await api.saveLogs(err, timers, 'ERROR', 'send themes initial...')
+                    await FirebaseService.addLogs(formatTime, 'ERRO', err, 'Send themes initial...');
                     return;
                 }
             }
         }
 
         if (message.body.length >= 35) {
-            try {
-                await api.registerOpiniao_(message.notifyName, message.author, message.sender.profilePicThumbObj.eurl, message.body)
-                    .then(async (event) => {
-                        if (event !== undefined) {
-                            await bot.sendText(message.from, event)
-                            return;
-                        }
-                        await bot.reply(message.from, event, message.id)
+            await FirebaseService.addOpinion(message.author, message.body)
+                .then(async event => {
+                    if (event !== undefined) {
+                        await bot.sendText(message.from, event)
                         return;
-                    })
-            } catch (err) {
-                await api.saveLogs(err, timers, 'ERROR', 'opiniao')
-                return;
-            }
+                    }
+                }).catch(async _ => {
+                    await FirebaseService.addLogs(formatTime, 'ERRO', err, 'registerOpiniao_()');
+                    return;
+                });
         }
 
         // send themes
@@ -145,7 +160,7 @@ function start(bot) {
                     return;
                 })
             } catch (err) {
-                await api.saveLogs(err, timers, 'ERROR', 'send themes')
+                await FirebaseService.addLogs(formatTime, 'ERRO', err, 'Send themes');
                 return
             }
         }
@@ -165,11 +180,10 @@ function start(bot) {
                         }
                     })
                 } catch (err) {
-                    await api.saveLogs(err, timers, 'ERROR', 'send Subthemes')
+                    await FirebaseService.addLogs(formatTime, 'ERRO', err, 'Send Subthemes');
                     return;
                 }
             }
         })
     });
 }
-// 557488562578-1624412670@g.us

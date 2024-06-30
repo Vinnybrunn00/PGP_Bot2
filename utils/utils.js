@@ -12,32 +12,6 @@ const boas_vindas = constants.boasVindas
 class ApiUtils {
     constructor() { }
 
-    async registerOpiniao_(name, contact, photo, opiniao) {
-        try {
-            let readFile = await fs.readFile(pathOpiniao)
-            const registerOpt = JSON.parse(readFile)
-            for (let conct of registerOpt) {
-                if (conct.contact === contact) {
-                    return '* Você já nos enviou sua opinião, obrigado por participar! 😅'
-                }
-            }
-            registerOpt.push(
-                {
-                    name: name,
-                    contact: contact,
-                    photo: photo,
-                    opiniao: opiniao,
-                }
-            );
-            await fs.writeFile(pathOpiniao, JSON.stringify(registerOpt))
-            await this.saveLogs('- Opinião registrada', 'INFO', 'registerOpiniao()')
-            return 'Obrigado por sua opinião! ✅';
-        } catch (err) {
-            await this.saveLogs(err, 'ERROR', 'registerOpiniao()')
-            return '* Ocorreu um erro interno, por favor tente mais tarde ❌'
-        }
-    }
-
     sendMsgTheme(theme, vote) {
         let exemple;
         console.log(vote.length)
@@ -166,6 +140,7 @@ class ApiUtils {
     }
 
     async registerUser(name, contact, photo) {
+        if (true) return;
         if (name !== undefined && contact !== undefined && photo !== undefined) {
             try {
                 let reg = await fs.readFile(pathRegister)

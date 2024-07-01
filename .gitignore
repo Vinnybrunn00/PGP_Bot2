@@ -8,9 +8,4 @@ node_modules
 **.data.json
 **.node-persist**
 **_IGNORE_**
-
-#other
-
-src/tester.js
-
-1.js
+config

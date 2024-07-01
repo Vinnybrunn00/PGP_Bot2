@@ -30,7 +30,7 @@ wa.create(create).then(bot => start(bot));
 function start(bot) {
     bot.onMessage(async message => {
         if (message.chat.isGroup) return;
-        if (message.author !== '557488700196@c.us') return;
+        //if (message.author !== '557488700196@c.us') return;
 
         let formatTime, timestamp;
 
@@ -115,7 +115,6 @@ function start(bot) {
         }
 
         if (message.body.length >= 35) {
-            if (isBlockInit) return;
             await FirebaseService.addOpinion(message.author, message.body)
                 .then(async event => {
                     if (event !== undefined) {
@@ -149,7 +148,6 @@ function start(bot) {
         // send Subthemes
         const keys = Object.keys(obj)
         keys.forEach(async element => {
-            if (isBlockInit) return;
             if (message.body === element) {
                 try {
                     await api.themesQuestions(

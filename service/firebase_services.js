@@ -34,7 +34,10 @@ class FirebaseServices {
                 if (contact === data.contact) {
                     await this.firestore.collection('register').doc(element.id).collection('opinion').doc().set({
                         'text': opn
-                    }).then(_ => {
+                    }).then(async _ => {
+                        await this.firestore.collection('register').doc(element.id).update({
+                            'isOpn': true
+                        })
                         _response = 'Obrigado por sua opinião! ✅'
                         return;
                     });

@@ -68,31 +68,11 @@ function start(bot) {
             }
         }
 
-        if (message.body.startsWith('!votes')) {
-            for (let i = 0; i < owner.length; i++) {
-                if (message.author === owner[i]) {
-                    await bot.sendFile(message.from, 'data/db/votes.json', 'votes.json', '• Arquivo de votos do PGP')
-                    await FirebaseService.addLogs(formatTime, 'INFO', `Arquivo de votos Solocitado por ${message.author}`, '!getvote');
-                    return;
-                }
-            }
-        }
-
-        if (message.body.startsWith('!opinion')) {
-            for (let i = 0; i < owner.length; i++) {
-                if (message.author === owner[i]) {
-                    await bot.sendFile(message.from, 'data/opiniao/opiniao_msg.json', 'opiniao_msg.json', '• Arquivo de opiniões do PGP')
-                    await api.saveLogs(`Arquivo de opinião Solocitado por ${message.author}`, formatTime, 'INFO', '!getopinion')
-                    return;
-                }
-            }
-        }
-
         // save user interaction
         await FirebaseService.addParticipant(message.notifyName, message.author, message.sender.profilePicThumbObj.eurl, formatTime, timestamp)
             .then(async obj => {
                 if (obj != undefined) {
-                    console.log('Registrado')
+                    await FirebaseService.addLogs(formatTime, 'INFO', 'New user register', 'addParticipant()');
                     return;
                 }
             })
@@ -135,6 +115,7 @@ function start(bot) {
         }
 
         if (message.body.length >= 35) {
+            if (isBlockInit) return;
             await FirebaseService.addOpinion(message.author, message.body)
                 .then(async event => {
                     if (event !== undefined) {
@@ -168,6 +149,7 @@ function start(bot) {
         // send Subthemes
         const keys = Object.keys(obj)
         keys.forEach(async element => {
+            if (isBlockInit) return;
             if (message.body === element) {
                 try {
                     await api.themesQuestions(

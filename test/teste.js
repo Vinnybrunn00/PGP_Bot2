@@ -21,13 +21,9 @@ async function resolveData(timers) {
 }
 
 async function main() {
-    let timers;
-
-    await xux.formatTime().then(async T => timers = T)
-    await resolveData(timers).then(date => {
-        console.log(date)
-        let ti = new Date(date)
-        console.log(ti)
-    });
+    const data = new Date()
+    let getMonth = data.getMonth() + 1
+    let dataFormats = `${data.getDate() < 10 ? '0' + data.getDate() : data.getDate()}/${data.getMonth() < 10 ? '0' + getMonth : getMonth}/${data.getFullYear()}`
+    console.log(dataFormats)
 }
 main()

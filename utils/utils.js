@@ -173,12 +173,12 @@ class ApiUtils {
 
     getHours(person) {
         const time = new Date()
-        if (time >= 1 && time <= 12) {
-            return `Olá * ${person}*, Bom dia\n\n${boas_vindas} !`
-        } else if (time >= 13 && time <= 18) {
-            return `Olá * ${person}*, Boa Tarde\n\n${boas_vindas} !`
+        if (time.getHours() >= 1 && time.getHours() <= 12) {
+            return `Olá *${person}*, Bom dia\n\n${boas_vindas} !`
+        } else if (time.getHours() >= 13 && time.getHours() <= 18) {
+            return `Olá *${person}*, Boa Tarde\n\n${boas_vindas} !`
         } else {
-            return `Olá * ${person}*, Boa Noite\n\n${boas_vindas} !`
+            return `Olá *${person}*, Boa Noite\n\n${boas_vindas} !`
         }
     }
 }
